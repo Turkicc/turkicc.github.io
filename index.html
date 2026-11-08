@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Turkicc · Minecraft Screensharer</title>
+<meta name="description" content="Turkicc, Minecraft screensharer for 25 servers including PvPHQ and Ocean. Full server list and contact.">
+<meta name="theme-color" content="#0B101B">
+<meta property="og:title" content="Turkicc · Minecraft Screensharer">
+<meta property="og:description" content="Screensharer for 25 Minecraft servers, including PvPHQ and Ocean. Magic bye bye.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://turkicc.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,600..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: forensic-tool profile — a property-panel hero, a featured row, then a sortable server roster read like a scan log */
+:root{
+  --bg:#0B101B; --surface:#121A29; --surface-2:#18223A; --line:#232E46;
+  --fg:#E6EBF4; --muted:#8994AC; --accent:#F4A62A; --accent-ink:#1A1204;
+  --ok:#41BC8C; --off:#6F7A92; --glow:#4CC9F0;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --glow:#0A84B8; --bg:#F2F4F8; --surface:#FFFFFF; --surface-2:#EAEEF5; --line:#D6DCE8;
+  --fg:#0E1422; --muted:#56627C; --accent:#A96300; --accent-ink:#FFFFFF;
+  --ok:#17845A; --off:#6A7387; color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --glow:#0A84B8; --bg:#F2F4F8; --surface:#FFFFFF; --surface-2:#EAEEF5; --line:#D6DCE8;
+  --fg:#0E1422; --muted:#56627C; --accent:#A96300; --accent-ink:#FFFFFF;
+  --ok:#17845A; --off:#6A7387; color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 15px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono)}
+.label{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* placeholder marker */
+.ph{border-bottom:1.5px dashed var(--accent);color:var(--accent);cursor:help}
+.notice{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:10px 14px;border:1px dashed var(--accent);border-radius:8px;font-size:13px;color:var(--muted)}
+.notice b{color:var(--accent);font-weight:600}
+
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;flex-wrap:wrap}
+.brand{font:800 18px/1 var(--display);font-stretch:118%;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 22%,transparent)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--fg)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:end;padding-block:48px 56px;border-bottom:1px solid var(--line)}
+.hero > *{min-width:0}
+.hero h1{font:900 clamp(44px,8vw,92px)/.92 var(--display);font-stretch:125%;letter-spacing:-.02em;margin:14px 0 20px;text-wrap:balance;text-transform:uppercase}
+.hero h1 .ph{border-bottom-width:3px}
+.hero p{max-width:52ch;margin:0;color:var(--muted);font-size:17px}
+.hero p strong{color:var(--fg);font-weight:600}
+.tagline{display:block;margin-top:14px;font:italic 600 19px/1.3 var(--body);color:var(--accent)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-family:var(--mono);font-size:13px}
+.panel-head{display:flex;justify-content:space-between;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.panel-head span:last-child{color:var(--ok)}
+.panel dl{margin:0;display:grid;grid-template-columns:auto 1fr}
+.panel dt,.panel dd{margin:0;padding:9px 14px;border-bottom:1px solid var(--line)}
+.panel dt{color:var(--muted)}
+.panel dd{text-align:right;font-variant-numeric:tabular-nums}
+.panel dl > :nth-last-child(-n+2){border-bottom:0}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stat{padding:26px 20px 26px 0;display:grid;gap:8px}
+.stat + .stat{padding-left:20px;border-left:1px solid var(--line)}
+.stat strong{font:800 clamp(30px,4.4vw,44px)/1 var(--display);font-stretch:112%;font-variant-numeric:tabular-nums}
+.stat small{font-size:13px;color:var(--muted)}
+
+section{padding-block:64px 8px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+h2{font:800 clamp(26px,3.6vw,36px)/1.05 var(--display);font-stretch:115%;margin:8px 0 0;text-wrap:balance}
+.sec-head p{margin:0;color:var(--muted);max-width:46ch;font-size:14px}
+
+/* featured */
+.featured{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px;align-content:start;min-width:0}
+.feat-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.logo{width:40px;height:40px;border-radius:9px;display:grid;place-items:center;font:800 16px/1 var(--display);background:var(--surface-2);border:1px solid var(--line);color:var(--accent)}
+.feat h3{margin:0;font:700 18px/1.2 var(--display);font-stretch:112%;overflow-wrap:anywhere}
+.feat .num{font:500 26px/1 var(--mono);font-variant-numeric:tabular-nums}
+.feat .num small{font-size:12px;color:var(--muted);margin-left:6px}
+
+/* chips */
+.role{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:5px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.role.lead{border-color:var(--accent);color:var(--accent)}
+.status{display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--mono);white-space:nowrap}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.status.on{color:var(--ok)}
+.status.off{color:var(--off)}
+
+/* roster */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:4px}
+.tabs button{all:unset;cursor:pointer;padding:7px 12px;border-radius:6px;font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.tabs button span{font:500 11px/1 var(--mono);opacity:.75}
+.tabs button[aria-pressed="true"]{background:var(--surface-2);color:var(--fg)}
+.tabs button:hover{color:var(--fg)}
+.search{flex:1 1 200px;min-width:0;display:flex;gap:8px}
+.search input,.search select{background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font:inherit;font-size:14px;min-width:0}
+.search input{flex:1}
+.roster{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.row{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 112px minmax(0,1.3fr) 92px;gap:16px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row.head{background:var(--surface-2);padding-block:10px}
+.row .name{font-weight:600;overflow-wrap:anywhere}
+.row .cat{font-size:13px;color:var(--muted)}
+.meter{display:flex;align-items:center;gap:10px;font:500 13px/1 var(--mono);font-variant-numeric:tabular-nums}
+.meter b{font-weight:500;min-width:52px;text-align:right}
+.bar{flex:1;height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.row.resigned .bar i{background:var(--off)}
+.row.resigned .name{color:var(--muted)}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+.foot-note{margin-top:10px;font-size:12px;color:var(--muted)}
+
+/* about + timeline */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.two > *{min-width:0}
+.about p{margin:0 0 14px;max-width:60ch}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tools span{font:500 12px/1 var(--mono);padding:8px 10px;border-radius:6px;background:var(--surface);border:1px solid var(--line)}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:1px solid var(--line)}
+.timeline li{position:relative;padding:0 0 22px 22px}
+.timeline li::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.timeline time{font:500 12px/1 var(--mono);color:var(--muted)}
+.timeline h4{margin:6px 0 2px;font-size:15px}
+.timeline p{margin:0;font-size:14px;color:var(--muted)}
+
+/* contact */
+.contact{margin-block:64px 48px;padding:32px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.contact h2{margin:0 0 6px}
+.contact p{margin:0;color:var(--muted)}
+.handle{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.handle code{font:500 15px/1 var(--mono);padding:12px 14px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);user-select:all}
+.btn{all:unset;cursor:pointer;padding:12px 16px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:14px}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent)}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+.contact-side{display:grid;gap:10px;justify-items:start}
+footer{padding-block:24px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* flashy layer */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.8}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(40% 35% at 20% 15%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 70%),radial-gradient(35% 30% at 85% 40%,color-mix(in srgb,var(--glow) 14%,transparent),transparent 70%);background-size:140% 140%;animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{from{background-position:0% 0%}to{background-position:100% 100%}}
+.wrap{position:relative;z-index:1}
+.hero h1{background:linear-gradient(100deg,var(--fg) 0%,var(--fg) 38%,var(--accent) 50%,var(--fg) 62%,var(--fg) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px color-mix(in srgb,var(--accent) 35%,transparent));animation:shine 5s linear infinite}
+@keyframes shine{from{background-position:100% 0}to{background-position:0% 0}}
+.avail{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);font:500 12px/1 var(--mono);letter-spacing:.04em}
+.avail::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+.panel,.feat,.roster,.contact,.tabs{background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.panel{position:relative;box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 18%,transparent),0 24px 60px -24px color-mix(in srgb,var(--accent) 45%,transparent)}
+.panel::after{content:"";position:absolute;left:0;right:0;top:-40px;height:40px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--glow) 16%,transparent));border-bottom:1px solid color-mix(in srgb,var(--glow) 60%,transparent);pointer-events:none;animation:scan 3.4s ease-in-out infinite}
+@keyframes scan{from{top:-40px}to{top:100%}}
+.feat{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.feat:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:0 16px 40px -14px color-mix(in srgb,var(--accent) 50%,transparent)}
+.logo{box-shadow:0 0 18px -4px color-mix(in srgb,var(--accent) 60%,transparent)}
+.bar i{background:linear-gradient(90deg,var(--glow),var(--accent));box-shadow:0 0 10px color-mix(in srgb,var(--accent) 55%,transparent)}
+.row.resigned .bar i{background:var(--off);box-shadow:none}
+.row:not(.head){transition:background .2s}
+.row:not(.head):hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.stat strong{text-shadow:0 0 26px color-mix(in srgb,var(--accent) 45%,transparent)}
+.btn{box-shadow:0 0 26px -6px var(--accent);transition:filter .2s,border-color .2s}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{box-shadow:none}
+@media (prefers-reduced-motion:reduce){.hero h1,.avail::before,body::after{animation:none}.panel::after{display:none}.feat:hover{transform:none}}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .featured{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){padding-left:0;border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  nav ul{display:none}
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+  .row.head{display:none}
+  .row .cat{grid-column:1;grid-row:2}
+  .row .role-cell{grid-column:2;grid-row:1;justify-self:end}
+  .row .meter{grid-column:1 / -1}
+  .row .status-cell{grid-column:2;grid-row:2;justify-self:end}
+}
+@media (max-width:460px){ .featured{grid-template-columns:1fr} .contact{padding:22px} }
+@media (prefers-reduced-motion:no-preference){ .bar i{transition:width .5s ease} }
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="wrap">
+
+  <nav>
+    <div class="brand"><i aria-hidden="true"></i><span>Turkicc</span></div>
+    <ul>
+      <li><a href="#servers">Servers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <span class="avail">Open for SS positions</span>
+      <div class="label" style="margin-top:18px">Minecraft screensharer · SS manager</div>
+      <h1>Turkicc</h1>
+      <p>Screensharing for <strong id="heroActive">25 servers</strong> across tierlists, FFA servers and the biggest SS communities, including <strong>PvPHQ</strong> and <strong>Ocean</strong>. <em class="tagline">Magic bye bye.</em></p>
+    </div>
+    <div class="panel" aria-label="Profile summary">
+      <div class="panel-head"><span>profile.sys</span><span>● open for SS</span></div>
+      <dl>
+        <dt>role</dt><dd>Screensharer</dd>
+        <dt>ssing since</dt><dd>Sep 2026</dd>
+        <dt>languages</dt><dd>EN · NL · TR</dd>
+        <dt>timezone</dt><dd>CET (UTC+1)</dd>
+        <dt>game</dt><dd>Minecraft</dd>
+      </dl>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section id="featured">
+    <div class="sec-head">
+      <div><div class="label">Main roles</div><h2>Screenshare communities</h2></div>
+      <p>The communities where I do the most checks.</p>
+    </div>
+    <div class="featured" id="featuredGrid"></div>
+  </section>
+
+  <section id="servers">
+    <div class="sec-head">
+      <div><div class="label">Full roster</div><h2>Every server I've screenshared for</h2></div>
+      <p>Filter by type, search by name, or sort by member count.</p>
+    </div>
+    <div class="toolbar">
+      <div class="tabs" id="tabs" role="group" aria-label="Filter servers"></div>
+      <div class="search">
+        <input id="q" type="search" placeholder="Search servers" aria-label="Search servers">
+        <select id="sort" aria-label="Sort servers">
+          <option value="members">Most members</option>
+          <option value="name">A to Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="roster" id="roster"></div>
+    <div class="foot-note">Member counts are Discord server sizes. Bars use a square-root scale so small servers stay visible.</div>
+  </section>
+
+  <div class="contact" id="contact">
+    <div>
+      <h2>Need a screensharer?</h2>
+      <p>Message me on Discord, Signal or Telegram for staff applications or SS requests.</p>
+    </div>
+    <div class="contact-side">
+      <div class="handle">
+        <span class="label">Discord</span>
+        <code id="discord">turkicc</code>
+        <button class="btn" id="copy" type="button">Copy Discord</button>
+      </div>
+      <div class="links">
+        <a class="btn ghost" href="https://signal.me/#eu/turkicc.66" target="_blank" rel="noopener">Signal · turkicc.66</a>
+        <a class="btn ghost" href="https://t.me/turkicc66" target="_blank" rel="noopener">Telegram · @turkicc66</a>
+      </div>
+    </div>
+  </div>
+
+  <footer><span>© 2026 Turkicc</span><span class="mono">Minecraft screensharer</span></footer>
+</div>
+
+<script src="servers.js"></script>
+<script>
+// Server data lives in servers.js — edit that file to add, remove or update servers.
+const S = SERVERS.map(s=>({name:s.name, cat:s.type, role:s.role, members:s.members, active:s.status==="active"}));
+
+const CAT = {ss:"SS community", com:"Server / SMP", tier:"Tierlist"};
+const fmt = n => n>=1000 ? (n/1000).toFixed(1).replace(/\.0$/,"")+"k" : String(n);
+const active = S.filter(s=>s.active), resigned = S.filter(s=>!s.active);
+const reach = active.reduce((a,s)=>a+s.members,0);
+const max = Math.max(...S.map(s=>s.members));
+
+document.getElementById("heroActive").textContent = active.length + " servers";
+document.getElementById("stats").innerHTML = [
+  [active.length,"Active servers"],
+  [fmt(reach),"Combined members, active"],
+  [active.filter(s=>s.cat==="tier").length,"Tierlists"],
+  [S.length,"Servers all-time"],
+].map(([v,l])=>`<div class="stat"><strong>${v}</strong><small>${l}</small></div>`).join("");
+
+document.getElementById("featuredGrid").innerHTML = S.filter(s=>s.cat==="ss")
+  .sort((a,b)=>b.members-a.members)
+  .map(s=>`<article class="feat">
+    <div class="feat-top"><div class="logo" aria-hidden="true">${s.name[0]}</div><span class="role ${s.role!=="Screensharer"?"lead":""}">${s.role}</span></div>
+    <h3>${s.name}</h3>
+    <div class="num">${fmt(s.members)}<small>members</small></div>
+    <span class="status on">Active</span>
+  </article>`).join("");
+
+const filters = [
+  ["all","All",S.length],["ss","SS communities",S.filter(s=>s.cat==="ss").length],
+  ["tier","Tierlists",S.filter(s=>s.cat==="tier").length],
+  ["com","Servers & SMPs",active.filter(s=>s.cat==="com").length],
+  ["past","Past roles",resigned.length],
+];
+let cur="all";
+const tabs=document.getElementById("tabs");
+tabs.innerHTML = filters.map(([k,l,n])=>`<button type="button" data-k="${k}" aria-pressed="${k===cur}">${l}<span>${n}</span></button>`).join("");
+tabs.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; cur=b.dataset.k;
+  tabs.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); render();});
+const q=document.getElementById("q"), sort=document.getElementById("sort");
+q.addEventListener("input",render); sort.addEventListener("change",render);
+
+function render(){
+  const term=q.value.trim().toLowerCase();
+  let list=S.filter(s=> cur==="all" ? true : cur==="past" ? !s.active : s.active && s.cat===cur);
+  if(term) list=list.filter(s=>s.name.toLowerCase().includes(term));
+  list.sort(sort.value==="name" ? (a,b)=>a.name.localeCompare(b.name) : (a,b)=>(b.active-a.active)||(b.members-a.members));
+  const head=`<div class="row head label"><span>Server</span><span>Type</span><span>Role</span><span>Members</span><span>Status</span></div>`;
+  document.getElementById("roster").innerHTML = head + (list.length ? list.map(s=>`
+    <div class="row ${s.active?"":"resigned"}">
+      <span class="name">${s.name}</span>
+      <span class="cat">${CAT[s.cat]}</span>
+      <span class="role-cell"><span class="role ${s.role!=="Screensharer"?"lead":""}">${s.role}</span></span>
+      <span class="meter"><b>${fmt(s.members)}</b><span class="bar"><i style="width:${(Math.sqrt(s.members/max)*100).toFixed(1)}%"></i></span></span>
+      <span class="status-cell"><span class="status ${s.active?"on":"off"}">${s.active?"Active":"Resigned"}</span></span>
+    </div>`).join("") : `<div class="empty">No servers match "${term.replace(/[<>&"]/g,"")}".</div>`);
+}
+render();
+
+document.getElementById("copy").addEventListener("click",async e=>{
+  const t=document.getElementById("discord").textContent, b=e.currentTarget;
+  try{ await navigator.clipboard.writeText(t); b.textContent="Copied"; }
+  catch{ const r=document.createRange(); r.selectNodeContents(document.getElementById("discord")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Selected, press Ctrl+C"; }
+  setTimeout(()=>b.textContent="Copy Discord",1800);
+});
+
+(()=>{
+  const c=document.getElementById("bg"), x=c.getContext("2d");
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W,H,P=[],col={};
+  const read=()=>{const s=getComputedStyle(document.documentElement);col.a=s.getPropertyValue("--accent").trim();col.g=s.getPropertyValue("--glow").trim();};
+  const size=()=>{const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(90,W*H/16000));
+    P=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.6+.6,h:Math.random()<.45}));};
+  function frame(){
+    x.clearRect(0,0,W,H);
+    for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;}
+    x.lineWidth=1;x.strokeStyle=col.g;
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const a=P[i],b=P[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+      if(d<16900){x.globalAlpha=(1-d/16900)*.32;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+    x.shadowBlur=8;
+    for(const p of P){x.globalAlpha=.9;x.fillStyle=x.shadowColor=p.h?col.a:col.g;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();}
+    x.shadowBlur=0;x.globalAlpha=1;
+    if(!still)requestAnimationFrame(frame);
+  }
+  read();size();frame();
+  addEventListener("resize",()=>{size();if(still)frame();});
+  const re=()=>{read();if(still)frame();};
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",re);
+  new MutationObserver(re).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+})();
+</script>
+</body>
+</html>
