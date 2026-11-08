@@ -13,7 +13,7 @@
 //  updates itself within a minute or two.
 // ─────────────────────────────────────────────────────────────
 const SERVERS = [
-  { name: "Minecraft Screensharing Community", type: "ss", role: "Staff", members: 1300, status: "active" },
+  { name: "Minecraft Screensharing Community", type: "ss", role: "Staff", members: 1500, status: "active" },
   { name: "Vigil", type: "ss", role: "Screensharer", members: 500, status: "active" },
   { name: "Ocean", type: "ss", role: "Screensharer", members: 40000, status: "active" },
   { name: "PvPHQ", type: "ss", role: "Screensharer", members: 106800, status: "active" },
