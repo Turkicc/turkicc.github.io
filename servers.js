@@ -22,6 +22,7 @@ const SERVERS = [
   { name: "Oceana Sword Community", type: "com", role: "Screensharer", members: 300, status: "active" },
   { name: "LT3 Diamond SMP Community", type: "com", role: "Screensharer", members: 300, status: "active" },
   { name: "Xylon", type: "com", role: "Screensharer", members: 640, status: "active" },
+  { name: "Central Tierlist", type: "tier", role: "Screensharer", members: 21000, status: "active" },
   { name: "Solatiry", type: "tier", role: "Screensharer", members: 19000, status: "active" },
   { name: "Lucnoxicity", type: "tier", role: "Screensharer", members: 11700, status: "active" },
   { name: "Solace Tierlist", type: "tier", role: "Screensharer", members: 5500, status: "active" },
