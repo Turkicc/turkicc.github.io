@@ -223,7 +223,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
       <span class="avail">Open for SS positions</span>
       <div class="label" style="margin-top:18px">Minecraft screensharer · SS manager</div>
       <h1>Turkicc</h1>
-      <p>Screensharing for <strong id="heroActive">25 servers</strong> across tierlists, FFA servers and the biggest SS communities, including <strong>PvPHQ</strong> and <strong>Ocean</strong>. <em class="tagline">Magic bye bye.</em></p>
+      <p>Screensharing for <strong id="heroActive">26 servers</strong> across tierlists, FFA servers and the biggest SS communities, including <strong>PvPHQ</strong> and <strong>Ocean</strong>. <em class="tagline">Magic bye bye.</em></p>
     </div>
     <div class="panel" aria-label="Profile summary">
       <div class="panel-head"><span>profile.sys</span><span>● open for SS</span></div>
@@ -287,7 +287,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
   <footer><span>© 2026 Turkicc</span><span class="mono">Minecraft screensharer</span></footer>
 </div>
 
-<script src="servers.js"></script>
+<script>document.write('<script src="servers.js?v='+Date.now()+'"><\/script>')</script>
 <script>
 // Server data lives in servers.js — edit that file to add, remove or update servers.
 const S = SERVERS.map(s=>({name:s.name, cat:s.type, role:s.role, members:s.members, active:s.status==="active"}));
@@ -306,7 +306,7 @@ document.getElementById("stats").innerHTML = [
   [S.length,"Servers all-time"],
 ].map(([v,l])=>`<div class="stat"><strong>${v}</strong><small>${l}</small></div>`).join("");
 
-document.getElementById("featuredGrid").innerHTML = S.filter(s=>s.cat==="ss")
+document.getElementById("featuredGrid").innerHTML = active.filter(s=>s.cat==="ss")
   .sort((a,b)=>b.members-a.members)
   .map(s=>`<article class="feat">
     <div class="feat-top"><div class="logo" aria-hidden="true">${s.name[0]}</div><span class="role ${s.role!=="Screensharer"?"lead":""}">${s.role}</span></div>
@@ -316,8 +316,8 @@ document.getElementById("featuredGrid").innerHTML = S.filter(s=>s.cat==="ss")
   </article>`).join("");
 
 const filters = [
-  ["all","All",S.length],["ss","SS communities",S.filter(s=>s.cat==="ss").length],
-  ["tier","Tierlists",S.filter(s=>s.cat==="tier").length],
+  ["all","All",S.length],["ss","SS communities",active.filter(s=>s.cat==="ss").length],
+  ["tier","Tierlists",active.filter(s=>s.cat==="tier").length],
   ["com","Servers & SMPs",active.filter(s=>s.cat==="com").length],
   ["past","Past roles",resigned.length],
 ];
