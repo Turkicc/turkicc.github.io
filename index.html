@@ -226,8 +226,8 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
   <nav>
     <div class="brand"><i aria-hidden="true"></i><span>Turkicc</span></div>
     <ul>
-      <li><a href="#servers">Servers</a></li>
       <li><a href="#faker-detector">Faker Detector</a></li>
+      <li><a href="#servers">Servers</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="https://github.com/Turkicc" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
@@ -262,25 +262,6 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
     <div class="featured" id="featuredGrid"></div>
   </section>
 
-  <section id="servers">
-    <div class="sec-head">
-      <div><div class="label">Full roster</div><h2>Every server I've screenshared for</h2></div>
-      <p>Filter by type, search by name, or sort by member count.</p>
-    </div>
-    <div class="toolbar">
-      <div class="tabs" id="tabs" role="group" aria-label="Filter servers"></div>
-      <div class="search">
-        <input id="q" type="search" placeholder="Search servers" aria-label="Search servers">
-        <select id="sort" aria-label="Sort servers">
-          <option value="members">Most members</option>
-          <option value="name">A to Z</option>
-        </select>
-      </div>
-    </div>
-    <div class="roster" id="roster"></div>
-    <div class="foot-note">Member counts are Discord server sizes. Bars use a square-root scale so small servers stay visible.</div>
-  </section>
-
   <section id="faker-detector">
     <div class="sec-head">
       <div><div class="label">My tool</div><h2>Faker Detector</h2></div>
@@ -302,6 +283,25 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
         <li>Save the report for your case</li>
       </ol>
     </div>
+  </section>
+
+  <section id="servers">
+    <div class="sec-head">
+      <div><div class="label">Full roster</div><h2>Every server I've screenshared for</h2></div>
+      <p>Filter by type, search by name, or sort by member count.</p>
+    </div>
+    <div class="toolbar">
+      <div class="tabs" id="tabs" role="group" aria-label="Filter servers"></div>
+      <div class="search">
+        <input id="q" type="search" placeholder="Search servers" aria-label="Search servers">
+        <select id="sort" aria-label="Sort servers">
+          <option value="members">Most members</option>
+          <option value="name">A to Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="roster" id="roster"></div>
+    <div class="foot-note">Member counts are Discord server sizes. Bars use a square-root scale so small servers stay visible.</div>
   </section>
 
   <div class="contact" id="contact">
