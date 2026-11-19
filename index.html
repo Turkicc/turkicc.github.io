@@ -145,6 +145,18 @@ h2{font:800 clamp(26px,3.6vw,36px)/1.05 var(--display);font-stretch:115%;margin:
 .timeline h4{margin:6px 0 2px;font-size:15px}
 .timeline p{margin:0;font-size:14px;color:var(--muted)}
 
+/* tool */
+.tool{display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;padding:28px;border:1px solid var(--line);border-radius:12px}
+.tool > *{min-width:0}
+.tool p{margin:0 0 14px;color:var(--muted);max-width:58ch}
+.tool p strong{color:var(--fg);font-weight:600}
+.tool .links{margin-top:20px}
+.tool a.btn{text-decoration:none}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;font:400 13px/1.5 var(--mono);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.steps li{counter-increment:s;display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line)}
+.steps li:last-child{border-bottom:0}
+.steps li::before{content:"0" counter(s);color:var(--accent)}
+
 /* contact */
 .contact{margin-block:64px 48px;padding:32px;border:1px solid var(--line);border-radius:12px;background:var(--surface);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .contact h2{margin:0 0 6px}
@@ -168,7 +180,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
 .avail{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);font:500 12px/1 var(--mono);letter-spacing:.04em}
 .avail::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s ease-out infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
-.panel,.feat,.roster,.contact,.tabs{background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.panel,.feat,.roster,.contact,.tabs,.tool{background:color-mix(in srgb,var(--surface) 78%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .panel{position:relative;box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 18%,transparent),0 24px 60px -24px color-mix(in srgb,var(--accent) 45%,transparent)}
 .panel::after{content:"";position:absolute;left:0;right:0;top:-40px;height:40px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--glow) 16%,transparent));border-bottom:1px solid color-mix(in srgb,var(--glow) 60%,transparent);pointer-events:none;animation:scan 3.4s ease-in-out infinite}
 @keyframes scan{from{top:-40px}to{top:100%}}
@@ -189,6 +201,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
   .hero{grid-template-columns:1fr}
   .featured{grid-template-columns:repeat(2,1fr)}
   .two{grid-template-columns:1fr}
+  .tool{grid-template-columns:1fr;padding:22px}
 }
 @media (max-width:720px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -214,7 +227,9 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
     <div class="brand"><i aria-hidden="true"></i><span>Turkicc</span></div>
     <ul>
       <li><a href="#servers">Servers</a></li>
+      <li><a href="#faker-detector">Faker Detector</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="https://github.com/Turkicc" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </nav>
 
@@ -266,6 +281,29 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
     <div class="foot-note">Member counts are Discord server sizes. Bars use a square-root scale so small servers stay visible.</div>
   </section>
 
+  <section id="faker-detector">
+    <div class="sec-head">
+      <div><div class="label">My tool</div><h2>Faker Detector</h2></div>
+      <p>A free screenshare tool I made, open on GitHub.</p>
+    </div>
+    <div class="tool">
+      <div>
+        <p><strong>FakerDetector</strong> checks whether a Minecraft player's connection runs through a second PC during a screenshare, a man-in-the-middle setup such as Faker.</p>
+        <p>One scan takes about 30 to 40 seconds. It changes no settings, stores nothing from the game session, and deletes everything it unpacks when the window closes.</p>
+        <div class="links">
+          <a class="btn" href="https://github.com/Turkicc/FakerDetector/releases/latest" target="_blank" rel="noopener">Download FakerDetector.exe</a>
+          <a class="btn ghost" href="https://github.com/Turkicc/FakerDetector" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+      <ol class="steps" aria-label="How to use FakerDetector">
+        <li>Player joins the server and stays connected</li>
+        <li>Run FakerDetector.exe as administrator</li>
+        <li>Press Scan and wait for the verdict</li>
+        <li>Save the report for your case</li>
+      </ol>
+    </div>
+  </section>
+
   <div class="contact" id="contact">
     <div>
       <h2>Need a screensharer?</h2>
@@ -280,11 +318,12 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;back
       <div class="links">
         <a class="btn ghost" href="https://signal.me/#eu/turkicc.66" target="_blank" rel="noopener">Signal · turkicc.66</a>
         <a class="btn ghost" href="https://t.me/turkicc66" target="_blank" rel="noopener">Telegram · @turkicc66</a>
+        <a class="btn ghost" href="https://github.com/Turkicc" target="_blank" rel="noopener">GitHub · Turkicc</a>
       </div>
     </div>
   </div>
 
-  <footer><span>© 2026 Turkicc</span><span class="mono">Minecraft screensharer</span></footer>
+  <footer><span>© 2026 Turkicc</span><a class="mono" href="https://github.com/Turkicc" target="_blank" rel="noopener">github.com/Turkicc</a></footer>
 </div>
 
 <script>document.write('<script src="servers.js?v='+Date.now()+'"><\/script>')</script>
